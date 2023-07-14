@@ -2,7 +2,7 @@
 
 class API
 {
-
+    private $path = "files/users.json";
     public function handleRequest()
     {
         $method = $_SERVER['REQUEST_METHOD']; // identify method
@@ -25,11 +25,30 @@ class API
 
     private function createUser()
     {
+
         try{
-            $jsonData = file_get_contents("files/users.json");
+            $jsonData = file_get_contents($this->path);
             $users = json_decode($jsonData, true);
-
-
+            $token = $this->generateToken();
+            foreach($users as $u){
+                if($u === $token){
+                    return [     
+                        'statusCode' => 200,
+                        'data' => "User exists"
+                    ];
+                }
+            }
+            array_push($users,$token);
+            $jsonString = json_encode($users, JSON_PRETTY_PRINT);
+            // Write in the file
+            $fp = fopen($this->path, 'w');
+            fwrite($fp, $jsonString);
+            fclose($fp);
+            $res = ["token"=>$token, "message"=>"User authenticated successfully"];
+            return [     
+                'statusCode' => 200,
+                'data' => $res
+            ];
         }catch(Exception $err){
             return [     
                 'statusCode' => 500,
@@ -37,10 +56,7 @@ class API
             ];
         }
         
-        return [     
-            'statusCode' => 200,
-            'data' => "User"
-        ];
+       
     }
 
 
@@ -56,11 +72,11 @@ class API
         $randomBytes = random_bytes(32); // generate 32 random bytes
         return base64_encode($randomBytes); // encode the string
     }
-    private function sendResponse($statusCode, $data)
+    private function sendResponse($response)
     {
-        http_response_code($statusCode);
+        http_response_code($response['statusCode']);
         header('Content-Type: application/json');
-        echo json_encode($data);
+        echo json_encode($response['data']);
         exit();
     }
 }
