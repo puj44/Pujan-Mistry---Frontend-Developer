@@ -1,0 +1,43 @@
+
+.navbar{
+    width:100%;
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: 0;
+    transition: top 0.3s ease-in-out;
+}
+.content-image{
+    background-repeat: no-repeat;
+    background-size: contain;
+    -webkit-background-size:contain;
+    -moz-background-size:contain;
+    -o-background-size:contain;
+    background-position: center;
+}
+.info-box{
+    display:flex;
+    flex-direction: column;
+    justify-content:center;
+    background-color: rgba(255, 255, 255, 0.09);
+    color:#fff;
+    padding:10px;
+    margin:5px;
+    height:195px;
+}
+.info-box-image{
+    width:fit-content !important;
+    height:195px !important;
+    margin:4px;
+}
+.text-label{
+    font-size:1.4rem;
+    text-align: center;
+}
+.number-label{
+    font-size:4rem;
+    text-align: center;
+}
+body{
+    font-family:"Roboto";
+}

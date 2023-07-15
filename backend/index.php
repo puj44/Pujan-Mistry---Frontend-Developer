@@ -28,8 +28,12 @@ class API extends UserController
                 break;
             case "OPTIONS":
                 if ($endpoint === '/api/users' && $method === "DELETE") { 
-                    // echo isset($POST["token"])?$_POST["token"]:null;
-                    $response= $this->deleteUser(isset($_SERVER["HTTP_AUTHORIZATION"])?urldecode($_SERVER["HTTP_AUTHORIZATION"]):null);
+                    if(isset($_SERVER["HTTP_AUTHORIZATION"])){
+                        $response= $this->deleteUser(urldecode($_SERVER["HTTP_AUTHORIZATION"]));
+                    }
+                    else{
+                        $response = ["statusCode"=>403,"data"=>""];
+                    }
                 }
                 $response = ["statusCode"=>200,"data"=>""];
                 break;

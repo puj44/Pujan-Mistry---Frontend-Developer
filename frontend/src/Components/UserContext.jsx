@@ -5,6 +5,7 @@ export const UserContext = createContext();
 
 export const DataProvider = ({ children }) => {
   const [token, setToken] = useState();
+
   const authenticateUser = async() =>{
     let tokenVal = "";
     const cookieToken = await cookies.get();
@@ -37,18 +38,19 @@ export const DataProvider = ({ children }) => {
         authenticateUser();
         
       }
+      
     window.addEventListener('beforeunload', async  function(e) {
       await removeTokens();
     });
-   return ()=>{
-    window.removeEventListener('beforeunload', function (e) {});
-   }
+    return ()=>{
+      window.removeEventListener('beforeunload', function (e) {});
+    }
   },[])
 
   const value = { token };
 
   return (
-    <UserContext.Provider value={value}>
+    <UserContext.Provider value={value} >
       {children}
     </UserContext.Provider>
   );
