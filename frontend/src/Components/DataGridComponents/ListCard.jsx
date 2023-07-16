@@ -1,9 +1,17 @@
-import React from 'react'
+import React, { useState } from 'react'
+import PopupModal from './PopupModal';
 
 export default function ListCard({rocketData}) {
+  const [show,setShow] = useState(false);
+  const handleRowClick = (id) =>{
+    setShow(id);
+  }
+  const handleToggleHide = () =>{
+    setShow(false);
+  }
   return (
     <div className="mt-7 pb-4 border-b border-white/[0.5] border-solid grid-cols-12 w-full">
-        <div className="w-full  ">
+        <div className="w-full list-card" onClick={()=>{handleRowClick(rocketData?.id)}} id={"data-row"}>
             <div className="grid-cols-6">
                 <span className="flex flex-row text-xl ">
                     <span className="grid w-full grid-cols-6 whitespace-nowrap">{rocketData?.rocket_name ?? "-"}</span>
@@ -21,6 +29,7 @@ export default function ListCard({rocketData}) {
                 </span>
             </div>
         </div>
+        <PopupModal show={show} handleToggleHide={handleToggleHide} />
     </div>
   )
 }

@@ -14,6 +14,7 @@ export default function DataGrid() {
   const [rocketsList, setRocketsList] = useState([]);
   const [meta, setMeta] = useState({});
   const [page, setPage] = useState(1);
+  const [isLoading, setLoading] = useState(false);
   const onSelectColumn = (val) =>{ // search type change
     setSearchQuery("");
     setSelectedColumnSearch(val);
@@ -25,15 +26,19 @@ export default function DataGrid() {
     setPage(val);
   }
   const onQueryChange = async() =>{
+    setLoading(true);
     const query = QueryUtilityFunc(searchQuery, selectedColumnSearch, page);
     const response = await get(`rockets?${query}`);
-    
-    console.log("rockets",response);
     if(response?.status === 200){
         if(response?.data?.rocketsData){
             setRocketsList([...response.data.rocketsData ??[]]);
             setMeta({...response.data.meta, currentPage:parseInt(response.data.meta?.currentPage)});
         }
+        setLoading(false);
+    }
+    else{
+
+        setLoading(false);
     }
   }
   useEffect(()=>{
@@ -47,7 +52,7 @@ export default function DataGrid() {
             {/* Input Container */}
             <SearchBox selectedColumnSearch={selectedColumnSearch} searchQuery={searchQuery} onChangeSearch={onChangeSearch} onSelectColumn={onSelectColumn} searchTypes={searchTypes}/>
             {/* Data List */}
-            <DataList rocketsList={[...rocketsList]} />
+            <DataList rocketsList={[...rocketsList]} isLoading={isLoading} />
             <Pagination meta={meta} moveTo={onPageChange} />
         </div>
     </div>

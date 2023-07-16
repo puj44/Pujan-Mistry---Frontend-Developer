@@ -1,12 +1,8 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
+import { UserContext } from './UserContext';
 
 export default function Banner({path,width, mobileImagePath,isContent,content}) {
-  const [isMobile, setIsMobile] = useState(false);
-  useEffect(()=>{
-    if(typeof window !== "undefined"){
-        setIsMobile(window.screen.availWidth <= 680 ? true: false);
-    }
-  },[])
+  const { isMobile } = useContext(UserContext);
   if(!isContent){
 
       return (

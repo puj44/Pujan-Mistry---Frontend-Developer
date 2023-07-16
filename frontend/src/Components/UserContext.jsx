@@ -5,6 +5,7 @@ export const UserContext = createContext();
 
 export const DataProvider = ({ children }) => {
   const [token, setToken] = useState();
+  const [isMobile, setIsMobile] = useState(false);
 
   const authenticateUser = async() =>{
     let tokenVal = "";
@@ -27,18 +28,20 @@ export const DataProvider = ({ children }) => {
     //  cookies.remove("token");
         await remove("users");
   }
+  
   useEffect(()=>{
+    if(typeof window !== "undefined"){
+      setIsMobile(window.screen.availWidth <= 680 ? true: false);
+    }
     cookies.remove("token");
     const value = cookies?.get();
     if(value && value?.token){
-        setToken(value?.token);
+      setToken(value?.token);
     }
     else{
-       
-        authenticateUser();
-        
-      }
-      
+      authenticateUser();  
+    }
+    
     window.addEventListener('beforeunload', async  function(e) {
       await removeTokens();
     });
@@ -47,7 +50,7 @@ export const DataProvider = ({ children }) => {
     }
   },[])
 
-  const value = { token };
+  const value = { token, isMobile };
 
   return (
     <UserContext.Provider value={value} >
