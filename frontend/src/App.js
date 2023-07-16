@@ -19,8 +19,9 @@ function App() {
           token && token !== "" &&
           <DataGrid />
         }
-        
-        
+
+        <div className="my-20"><Banner path="/images/desktop/falcon_2.svg" mobileImagePath={"/images/mobile/falcon_2.svg"} width="100%" /></div>
+        <div className=""><Banner path="/images/desktop/falcon_3.svg" mobileImagePath={"/images/mobile/falcon_3.svg"} width="100%" /></div>
       </body>
     </div>
         
