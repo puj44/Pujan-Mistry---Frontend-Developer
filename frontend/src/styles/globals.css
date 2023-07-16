@@ -51,7 +51,7 @@
 /* dropdown css */
 .custom-select{
     color:#FFF;
-    width:10%;
+    /* width:10%; */
 }
 /* search type button css */
 .search-type-button:hover{

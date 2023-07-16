@@ -23,16 +23,16 @@ export default function SearchBox({selectedColumnSearch, onSelectColumn, searchT
         {/* Search Input */}
         <input  type="text" defaultValue={''} onChange={(e)=>onChangeSearch(e.target.value)} 
             className={`border-0 ms-2 group-input  ${show?"shadow-[inset_0px_11px_5px_-10px_rgba(255,255,255,0.5)_,inset_0px_-11px_5px_-10px_rgba(255,255,255,0.5)]":""} focus:shadow-[inset_0px_11px_5px_-10px_rgba(255,255,255,0.5)_,inset_0px_-11px_5px_-10px_rgba(255,255,255,0.5)] outline-none d-flex justify-center align-middle bg-black caret-white`} 
-            style={{width:!isMobile?window?.screen?.availWidth <= 768?"75%":"90%": window?.screen?.availWidth <= 580?"55%":"75%",fontSize:"1.3rem", transition:"box-shadow 0.3s ease-in-out"}} id="searchField"/>
+            style={{width:!isMobile?window?.screen?.availWidth <= 1048?"70%":"90%": window?.screen?.availWidth <= 580?"55%":"75%",fontSize:"1.3rem", transition:"box-shadow 0.3s ease-in-out"}} id="searchField"/>
         {/* Search Dropdown */}
         <div className="py-2">
             <div className="divider-line h-full"></div>
         </div>
         <div className="relative inline-block custom-select group-select">
-            <div className="h-full">
+            <div className="h-full w-max">
                 <button  
                     type="button" 
-                    className={`text-base w-full h-full justify-start text-start ps-3 pe-2  ${!isMobile?"whitespace-nowrap truncate":window?.screen?.availWidth <= 768?"":""}  text-white`} id="menu-button" 
+                    className={`text-base w-full h-full justify-start text-start px-3  ${!isMobile? window?.screen?.availWidth <= 1048 && window?.screen?.availWidth > 480 ?"whitespace-nowrap":"whitespace-nowrap truncate":" truncate"}  text-white`} id="menu-button" 
                     onClick={(e)=>{e.preventDefault(); setShow(!show); }} 
                     aria-expanded="false" aria-haspopup="true"
                 >
