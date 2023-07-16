@@ -42,6 +42,7 @@ export default function DataGrid() {
   
   const onChangeSearch = (val)=>{
     setSearchQuery(val);
+    setPage(1);
   }
   
   useEffect(()=>{
