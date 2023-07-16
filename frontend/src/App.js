@@ -14,12 +14,12 @@ function App() {
     <div className="bg-black">
       <Navbar/>
       <body >
-          <Banner path="/images/desktop/falcon_banner.svg" mobileImagePath={"/images/mobile/mobile_falcon.svg"} width="100%" isContent={true} content={<InformationBox/>} />
-
-        <DataGrid token={token}/>
-        <DataGrid token={token}/>
-        <DataGrid token={token}/>
-        <DataGrid token={token}/>
+        <Banner path="/images/desktop/falcon_banner.svg" mobileImagePath={"/images/mobile/mobile_falcon.svg"} width="100%" isContent={true} content={<InformationBox/>} />
+        {
+          token && token !== "" &&
+          <DataGrid />
+        }
+        
         
       </body>
     </div>

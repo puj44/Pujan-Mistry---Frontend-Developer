@@ -8,7 +8,7 @@
         "title":"Type"
     },
     {
-        "field":"country",
-        "title":"Country"
+        "field":"original_launch",
+        "title":"Original Launch"
     }
 ]

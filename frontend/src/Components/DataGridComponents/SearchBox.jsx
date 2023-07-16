@@ -28,7 +28,7 @@ export default function SearchBox({selectedColumnSearch, onSelectColumn, searchT
             <div className="h-full">
                 <button  
                     type="button" 
-                    className={`w-full h-full justify-start text-start ps-4  py-2 text-sm text-white`} id="menu-button" 
+                    className={`text-base w-full h-full justify-start text-start ps-4   text-white`} id="menu-button" 
                     onClick={(e)=>{e.preventDefault(); setShow(!show); }} 
                     aria-expanded="false" aria-haspopup="true"
                 >
@@ -36,13 +36,15 @@ export default function SearchBox({selectedColumnSearch, onSelectColumn, searchT
                 </button>
             </div>
 
-            <div id="custom-dropdown" className={`absolute left-0 mt-0.5 z-30  w-56 origin-bottom-right  bg-black border border-white shadow-lg ${show ? "inline-flex":"hidden"}`} role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabindex="-1">
+            <div id="custom-dropdown" className={`absolute left-0 mt-0.5 z-30 w-56 origin-bottom-right  bg-black border border-white shadow-lg ${show ? "inline-flex ":" hidden"}`} role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabindex="-1"
+                style={{transition:"opacity 0.5s ease-in-out"}}
+            >
                 <div class="py-1 w-full" role="none">
                     {
                         searchTypes?.map((data,idx)=>{
                             return(
                                 <a href="!#" className="text-white block py-1 text-sm focus:outline-none px-2" role="menuitem" onClick={(e)=>{e.preventDefault(); onSelectColumn(data); setShow(false)}} id="menu-item">
-                                    <span className=" w-full ps-2 py-1 flex search-type-button">
+                                    <span className=" w-full ps-2 py-1 flex search-type-button text-base">
                                         {data.title}
                                     </span>
                                 </a>
