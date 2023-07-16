@@ -102,7 +102,7 @@
 }
 .list-card:hover{
     background:#1B1B1B;
-    border-radius:3px;
+    /* border-radius:3px; */
     padding:4px 10px;
     cursor: pointer;
     transition:all 0.1s ease-in-out;
@@ -195,6 +195,13 @@ body{
       background-position: -44px -44px;
       background-size: 100px 100px;
     }
+    50% {
+        box-shadow: 3px 3px 6px 0px rgba(255, 61, 0, 0.5);
+        width: 30px;
+        height: 28px;
+        background-position: -30px -30px;
+        background-size: 90px 90px;
+      }
     100% {
       box-shadow: 2px 2px 8px 0px rgba(255, 61, 0, 0.5);
       width: 30px;
