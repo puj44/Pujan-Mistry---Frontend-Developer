@@ -22,8 +22,8 @@ export default function Navbar() {
     }
   },[previousScrollValue,show, onScroll]);
   return (
-    <div id="nav" className="h-100 navbar bg-transparent z-20" style={{top:show?"0":"-100px"}}>
-      <div className="ms-3 p-4">
+    <div id="nav" className="bg-black navbar p-3 z-20" style={{top:show?"0":"-100px"}}>
+      <div className="ms-3 pb-0">
         <img 
           src={"/images/spacex_logo.png"}
           width="245"

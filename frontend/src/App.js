@@ -1,5 +1,6 @@
 
 import Banner from './Components/Banner';
+import DataGrid from './Components/DataGrid';
 import InformationBox from './Components/InformationBox';
 import Navbar from './Components/Navbar';
 import {  UserContext } from './Components/UserContext';
@@ -12,8 +13,14 @@ function App() {
   return (
     <div className="bg-black">
       <Navbar/>
-      <body>
-        <Banner path="/images/desktop/falcon_banner.svg" mobileImagePath={"/images/mobile/mobile_falcon.svg"} width="100%" isContent={true} content={<InformationBox/>} />
+      <body >
+          <Banner path="/images/desktop/falcon_banner.svg" mobileImagePath={"/images/mobile/mobile_falcon.svg"} width="100%" isContent={true} content={<InformationBox/>} />
+
+        <DataGrid token={token}/>
+        <DataGrid token={token}/>
+        <DataGrid token={token}/>
+        <DataGrid token={token}/>
+        
       </body>
     </div>
         
