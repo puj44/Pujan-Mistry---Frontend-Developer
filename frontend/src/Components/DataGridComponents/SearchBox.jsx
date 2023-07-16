@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-export default function SearchBox({selectedColumnSearch, onSelectColumn, searchTypes}) {
+export default function SearchBox({selectedColumnSearch, onSelectColumn, searchTypes, searchQuery}) {
   const [show, setShow] = useState(false);
   const handleToggleShow = (e) =>{
     if(e.target.id !== "menu-item" && e.target.id !== "custom-dropdown" && e.target.id !== "menu-button"){
@@ -19,7 +19,7 @@ export default function SearchBox({selectedColumnSearch, onSelectColumn, searchT
             src="/images/search.svg" className="group-icon ms-2 d-flex justify-center align-middle" alt="search" width="20" height="20" 
         />
         {/* Search Input */}
-        <input  type="text" className={`border-0 ms-2 group-input  ${show?"shadow-[inset_0px_11px_5px_-10px_rgba(255,255,255,0.5)_,inset_0px_-11px_5px_-10px_rgba(255,255,255,0.5)]":""} focus:shadow-[inset_0px_11px_5px_-10px_rgba(255,255,255,0.5)_,inset_0px_-11px_5px_-10px_rgba(255,255,255,0.5)] outline-none d-flex justify-center align-middle bg-black caret-white`} style={{width:"90%",fontSize:"1.3rem", transition:"box-shadow 0.3s ease-in-out"}} id="searchField" onChange={(e)=>{}} />
+        <input  type="text" value={searchQuery??""} className={`border-0 ms-2 group-input  ${show?"shadow-[inset_0px_11px_5px_-10px_rgba(255,255,255,0.5)_,inset_0px_-11px_5px_-10px_rgba(255,255,255,0.5)]":""} focus:shadow-[inset_0px_11px_5px_-10px_rgba(255,255,255,0.5)_,inset_0px_-11px_5px_-10px_rgba(255,255,255,0.5)] outline-none d-flex justify-center align-middle bg-black caret-white`} style={{width:"90%",fontSize:"1.3rem", transition:"box-shadow 0.3s ease-in-out"}} id="searchField" onChange={(e)=>{}} />
         {/* Search Dropdown */}
         <div className="py-2">
             <div className="divider-line h-full"></div>

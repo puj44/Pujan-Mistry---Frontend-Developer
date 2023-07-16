@@ -65,6 +65,41 @@
     min-width: 100px;
     /* text-align: start; */
 }
+/* pagination css */
+.page-item{
+    background:#000;
+    color:#fff;
+    border:1px solid white;
+    font-weight:500;
+    padding:6px 12px;
+}
+.page-item:hover{
+    background:#1b1b1b
+}
+.active:hover{
+    background:#fff;
+}
+.page-button{
+    background:#fff;
+    color:#000;
+    font-weight:500;
+    padding:6px 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.disabled{
+    color:#1b1b1b;
+    background:rgba(255,255,255,0.5);
+    cursor:default;
+}
+.page-link{
+    display:block;
+}
+.active{
+    background:#fff;
+    color:#000
+}
 body{
     color:#FFF;
 }

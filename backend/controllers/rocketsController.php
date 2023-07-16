@@ -48,11 +48,21 @@
                         $result = $data;
                     }
                 }
+                // set metadata
+                $totalItems = count($result);
+                $totalPages = ceil($totalItems / $itemsPerPage);
+
+                // metadata array
+                $metadata = [
+                    'totalItems' => $totalItems,
+                    'currentPage' => $page,
+                    'itemsPerPage' => $itemsPerPage,
+                    'totalPages' => $totalPages
+                ];
                 $paginatedResult = [];
                 if(count($result) > 0){
                     $paginatedResult = array_slice($result, $offset, $itemsPerPage);
                 }
-                
                 if($error){
                     return [
                         "statusCode" => 500,
@@ -62,7 +72,7 @@
                 else{
                     return [
                         "statusCode" => 200,
-                        "data" =>$paginatedResult
+                        "data" =>["rocketsData"=>$paginatedResult,"meta"=>$metadata]
                     ];
                 }
                 curl_close($curl);
