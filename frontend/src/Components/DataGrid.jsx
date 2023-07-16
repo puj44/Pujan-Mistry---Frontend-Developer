@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useCallback, useContext, useEffect, useState } from 'react'
 import searchTypes from "../json/searchTypes.json"
 import SearchBox from './DataGridComponents/SearchBox';
 import DataList from './DataGridComponents/DataList';
@@ -23,40 +23,40 @@ export default function DataGrid() {
     }
     setSelectedColumnSearch(val);
   }
-  const onChangeSearch = (val) =>{ //search query change
-    searchDebounce(() => setSearchQuery(val));
-  }
+  
   const onPageChange = (val) =>{ // page change
     setPage(val);
   }
   const onQueryChange = async() =>{
-    setLoading(true);
+   
     const query = QueryUtilityFunc(searchQuery, selectedColumnSearch, page);
     const response = await get(`rockets?${query}`);
     if(response?.status === 200){
         if(response?.data?.rocketsData){
-            setRocketsList([...response.data.rocketsData ??[]]);
+            setRocketsList(response.data.rocketsData ??[]);
             setMeta({...response.data.meta, currentPage:parseInt(response.data.meta?.currentPage)});
         }
-        setLoading(false);
     }
-    else{
-
-        setLoading(false);
-    }
+    setLoading(false);
   }
+  
+  const onChangeSearch = (val)=>{
+    setSearchQuery(val);
+  }
+  
   useEffect(()=>{
+    setLoading(true);
       // call function to request data upon search, type and page update
-      onQueryChange();
-  },[token,searchQuery,page])
+    onQueryChange();
+  },[token,page,searchQuery])
   return (
     <div className="2xl:mt-40 mt-4">
         <h3 className="text-center mb-4" style={{fontSize:"1.8rem"}}>FIND MORE HERE</h3>
         <div className="w-100 2xl:px-64 xl:px-64 md:px-32 sm:px-14 px-8">
             {/* Input Container */}
-            <SearchBox selectedColumnSearch={selectedColumnSearch} searchQuery={searchQuery} onChangeSearch={onChangeSearch} onSelectColumn={onSelectColumn} searchTypes={searchTypes}/>
+            <SearchBox selectedColumnSearch={selectedColumnSearch} searchQuery={searchQuery} onChangeSearch={searchDebounce(onChangeSearch)} onSelectColumn={onSelectColumn} searchTypes={searchTypes}/>
             {/* Data List */}
-            <DataList rocketsList={[...rocketsList]} isLoading={isLoading} />
+            <DataList rocketsList={rocketsList} isLoading={isLoading} />
             <Pagination meta={meta} moveTo={onPageChange} />
         </div>
     </div>

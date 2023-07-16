@@ -1,6 +1,10 @@
-export const searchDebounce = (func, timeout = 700) => {
-    let timer;
-    clearTimeout(timer);
-    timer = setTimeout(() => { func.apply(this); }, timeout);
+export const searchDebounce = (func) => {
+    let debounceTimer
+    return function() {
+        const context = this
+        const args = arguments
+            clearTimeout(debounceTimer)
+                
+         debounceTimer = setTimeout(() => func.apply(context, args), 500)
+    }
 }
-
