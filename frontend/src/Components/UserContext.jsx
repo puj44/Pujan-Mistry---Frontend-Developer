@@ -5,6 +5,8 @@ export const UserContext = createContext();
 
 export const DataProvider = ({ children }) => {
   const [token, setToken] = useState();
+  const [isMobile, setIsMobile] = useState(false);
+
   const authenticateUser = async() =>{
     let tokenVal = "";
     const cookieToken = await cookies.get();
@@ -26,29 +28,32 @@ export const DataProvider = ({ children }) => {
     //  cookies.remove("token");
         await remove("users");
   }
+  
   useEffect(()=>{
+    if(typeof window !== "undefined"){
+      setIsMobile(window.screen.availWidth <= 680 ? true: false);
+    }
     cookies.remove("token");
     const value = cookies?.get();
     if(value && value?.token){
-        setToken(value?.token);
+      setToken(value?.token);
     }
     else{
-       
-        authenticateUser();
-        
-      }
+      authenticateUser();  
+    }
+    
     window.addEventListener('beforeunload', async  function(e) {
       await removeTokens();
     });
-   return ()=>{
-    window.removeEventListener('beforeunload', function (e) {});
-   }
+    return ()=>{
+      window.removeEventListener('beforeunload', function (e) {});
+    }
   },[])
 
-  const value = { token };
+  const value = { token, isMobile };
 
   return (
-    <UserContext.Provider value={value}>
+    <UserContext.Provider value={value} >
       {children}
     </UserContext.Provider>
   );
