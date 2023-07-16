@@ -16,7 +16,11 @@ export default function DataGrid() {
   const [page, setPage] = useState(1);
   const [isLoading, setLoading] = useState(false);
   const onSelectColumn = (val) =>{ // search type change
-    setSearchQuery("");
+    if(searchQuery !== ""){
+        setPage(1);
+        setSearchQuery("");
+        document.getElementById("searchField").value = "";
+    }
     setSelectedColumnSearch(val);
   }
   const onChangeSearch = (val) =>{ //search query change
@@ -44,7 +48,7 @@ export default function DataGrid() {
   useEffect(()=>{
       // call function to request data upon search, type and page update
       onQueryChange();
-  },[token,searchQuery, selectedColumnSearch,page])
+  },[token,searchQuery,page])
   return (
     <div className="2xl:mt-40 mt-4">
         <h3 className="text-center mb-4" style={{fontSize:"1.8rem"}}>FIND MORE HERE</h3>

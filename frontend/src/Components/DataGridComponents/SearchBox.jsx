@@ -21,7 +21,7 @@ export default function SearchBox({selectedColumnSearch, onSelectColumn, searchT
             src="/images/search.svg" className="group-icon ms-2 d-flex justify-center align-middle" alt="search" width="20" height="20" 
         />
         {/* Search Input */}
-        <input  type="text" defaultValue={searchQuery??''} onChange={(e)=>onChangeSearch(e.target.value)} 
+        <input  type="text" defaultValue={''} onChange={(e)=>onChangeSearch(e.target.value)} 
             className={`border-0 ms-2 group-input  ${show?"shadow-[inset_0px_11px_5px_-10px_rgba(255,255,255,0.5)_,inset_0px_-11px_5px_-10px_rgba(255,255,255,0.5)]":""} focus:shadow-[inset_0px_11px_5px_-10px_rgba(255,255,255,0.5)_,inset_0px_-11px_5px_-10px_rgba(255,255,255,0.5)] outline-none d-flex justify-center align-middle bg-black caret-white`} 
             style={{width:!isMobile?window?.screen?.availWidth <= 768?"75%":"90%": window?.screen?.availWidth <= 580?"55%":"75%",fontSize:"1.3rem", transition:"box-shadow 0.3s ease-in-out"}} id="searchField"/>
         {/* Search Dropdown */}
