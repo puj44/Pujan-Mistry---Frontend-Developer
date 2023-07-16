@@ -1,6 +1,48 @@
 <?php
     class rocketsController
     {
+        //fetch one rocket
+        public function fetchRocket($id){
+            if($id){
+                $trimmedID = trim($id);
+                $requestUrl = "https://api.spacexdata.com/v3/rockets/$trimmedID";
+                try{
+                    $curl = curl_init($requestUrl);
+                    curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+                    curl_setopt($curl, CURLOPT_FOLLOWLOCATION, true);
+                    $res = curl_exec($curl);
+                    $error = null;
+                    if ($res === false) {
+                        $error = curl_error($curl);
+                    }
+                    else{
+                        return [
+                            "statusCode" => 200,
+                            "data" =>["rocket"=> json_decode($res) ]
+                        ];
+                    }
+                    if($error){
+                        return [
+                            "statusCode" => 500,
+                            "data" =>$error
+                        ];
+                    }
+                    curl_close($curl);
+                } catch(Exception $e){
+                    return [
+                        "statusCode" => 500,
+                        "data" => "Error while fetching ID: "+$e
+                    ];
+                }
+            }else{
+                return [
+                    "statusCode" => 500,
+                    "data" => "Error while fetching ID"
+                ];
+            }
+        }
+
+        //fetch all rockets data
         public function fetch($search,$page){
             $requestUrl = "https://api.spacexdata.com/v3/rockets";
             $itemsPerPage = 2; //since the data is not gonna be more than 4 from api

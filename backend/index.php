@@ -14,6 +14,7 @@ class API extends UserController
         $method = $_SERVER['REQUEST_METHOD']; // identify method
         $endpoint = $_SERVER['REQUEST_URI']; //identify endpoint
         $parsedUrl = parse_url($endpoint);
+        $idPattern = '/^\/api\/rockets(\/[a-zA-Z0-9_-]+)?$/';
         switch ($method) {
             case 'GET':
                 if($parsedUrl["path"] === '/api/rockets'){
@@ -24,7 +25,19 @@ class API extends UserController
                         $response = ["statusCode"=>403,"data"=>"Unauthorized"];
                     }
                 }
-                
+                else if(preg_match($idPattern, $parsedUrl["path"],$matches)){
+                    if($this->isAuthorized(isset($_SERVER["HTTP_AUTHORIZATION"])?urldecode($_SERVER["HTTP_AUTHORIZATION"]):null)){
+                        if (isset($matches[1])) {
+                            $id = trim($matches[1], '/');
+                            $response = $rocket->fetchRocket($id);
+                        } else {
+                            $response = $this->notFound();
+                        }
+                    }
+                    else{
+                        $response = ["statusCode"=>403,"data"=>"Unauthorized"];
+                    }
+                }
                 else {
                     $response = $this->notFound();
                 }
@@ -40,7 +53,6 @@ class API extends UserController
                 break;
             case 'DELETE':
                 if ($endpoint === '/api/users') { 
-                    // echo isset($POST["token"])?$_POST["token"]:null;
                     $response= $this->deleteUser(isset($_SERVER["HTTP_AUTHORIZATION"])?urldecode($_SERVER["HTTP_AUTHORIZATION"]):null);
                 }
                 else {
