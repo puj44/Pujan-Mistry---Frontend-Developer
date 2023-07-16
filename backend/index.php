@@ -1,22 +1,40 @@
 <?php
 $UserController = require('./controllers/userController.php');
+$RocketsController = require('./controllers/rocketsController.php');
 $user = new UserController();
 class API extends UserController
 {
-   
     public function __construct()
     {
         $this->handleCors();
     }
     public function handleRequest()
     {
+        $rocket = new RocketsController();
         $method = $_SERVER['REQUEST_METHOD']; // identify method
         $endpoint = $_SERVER['REQUEST_URI']; //identify endpoint
+        $parsedUrl = parse_url($endpoint);
         switch ($method) {
+            case 'GET':
+                if($parsedUrl["path"] === '/api/rockets'){
+                    if($this->isAuthorized(isset($_SERVER["HTTP_AUTHORIZATION"])?urldecode($_SERVER["HTTP_AUTHORIZATION"]):null)){
+                        $response = $rocket->fetch(isset($_GET["search"])?$_GET["search"]:null,isset($_GET["page"])?$_GET["page"]:null);
+                    }
+                    else{
+                        $response = ["statusCode"=>403,"data"=>"Unauthorized"];
+                    }
+                }
+                
+                else {
+                    $response = $this->notFound();
+                }
+                break;
             case 'POST':
                 if ($endpoint === '/api/users') { // authenticate a new user to the system
                     $response= $this->createUser(isset($_SERVER["HTTP_AUTHORIZATION"])?urldecode($_SERVER["HTTP_AUTHORIZATION"]):null);
-                }  else {
+                }
+                
+                else {
                     $response = $this->notFound();
                 }
                 break;
@@ -25,6 +43,9 @@ class API extends UserController
                     // echo isset($POST["token"])?$_POST["token"]:null;
                     $response= $this->deleteUser(isset($_SERVER["HTTP_AUTHORIZATION"])?urldecode($_SERVER["HTTP_AUTHORIZATION"]):null);
                 }
+                else {
+                    $response = $this->notFound();
+                }
                 break;
             case "OPTIONS":
                 if ($endpoint === '/api/users' && $method === "DELETE") { 
@@ -32,7 +53,7 @@ class API extends UserController
                         $response= $this->deleteUser(urldecode($_SERVER["HTTP_AUTHORIZATION"]));
                     }
                     else{
-                        $response = ["statusCode"=>403,"data"=>""];
+                        $response = ["statusCode"=>403,"data"=>"Unauthorized"];
                     }
                 }
                 $response = ["statusCode"=>200,"data"=>""];
@@ -41,7 +62,7 @@ class API extends UserController
                 $response = $this->notFound();
                 break;
         }
-        $this->sendResponse($response);
+        $this->sendResponse($response ?? $this->notFound());
     }
    
 

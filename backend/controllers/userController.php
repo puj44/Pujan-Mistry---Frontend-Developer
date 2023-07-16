@@ -59,6 +59,25 @@ class userController{
         
        
     }
+    public function isAuthorized($cookieToken)
+    {
+        if($cookieToken && $cookieToken !== ""){
+            try{
+                $jsonData = file_get_contents($this->path);
+                $users = json_decode($jsonData, true);
+                $value = explode("Bearer ",$cookieToken);
+                $decoded= $value[1];
+                if (($key = array_search($decoded, $users)) !== false) {
+                    return true;
+                }
+            }catch(Exception $e){
+                return false;
+            }
+        }
+        else{
+            return false;
+        }
+    }
      //generate token for user
      private function generateToken()
      {
